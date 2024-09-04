@@ -1,6 +1,7 @@
 package br.com.fiap.view;
 
 import br.com.fiap.dao.CarroDao;
+import br.com.fiap.exception.NotFoundException;
 import br.com.fiap.factory.ConnectionFactory;
 import br.com.fiap.model.CarroModel;
 
@@ -22,15 +23,24 @@ public class CadastroCarroView {
         try {
             CarroDao carroDao = new CarroDao();
 
-            List<CarroModel> carros = carroDao.list();
+            carroDao.update(new CarroModel(
+                    "JZN0238",
+                    "C6",
+                    "Citroen",
+                    "Verde"
+            ));
 
-            for (CarroModel carroModel:carros) {
-                System.out.println(carroModel.getModelo());
-            }
+//            List<CarroModel> carros = carroDao.list();
+//
+//            for (CarroModel carroModel:carros) {
+//                System.out.println(carroModel.getModelo());
+//            }
 
             carroDao.closeConnection();
         } catch (SQLException e) {
             System.out.printf("Database error: %s\n", e.getMessage());
+        } catch (NotFoundException e) {
+            System.out.printf("Entidade não encontrada: %s\n", e.getMessage());
         }
     }
 }

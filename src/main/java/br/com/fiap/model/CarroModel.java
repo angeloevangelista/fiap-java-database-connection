@@ -46,4 +46,11 @@ public class CarroModel {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
+
+    public void exibirCarro() {
+        System.out.println("Placa: " + this.placa);
+        System.out.println("Modelo: " + this.modelo);
+        System.out.println("Fabricante: " + this.fabricante);
+        System.out.println("Cor: " + this.cor);
+    }
 }

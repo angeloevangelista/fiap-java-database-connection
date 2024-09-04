@@ -1,5 +1,6 @@
 package br.com.fiap.dao;
 
+import br.com.fiap.exception.NotFoundException;
 import br.com.fiap.factory.ConnectionFactory;
 import br.com.fiap.model.CarroModel;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarroDao {
-    private Connection connection;
+    private final Connection connection;
 
     public CarroDao() throws SQLException {
         this.connection = ConnectionFactory.getConnection();
@@ -52,11 +53,56 @@ public class CarroDao {
         return carroModels;
     }
 
-    public void delete(CarroModel carroModel) {
+    public CarroModel getByPlaca(String placa) throws SQLException {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT * FROM CARROS WHERE placa = ?"
+        );
 
+        statement.setString(1, placa);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            CarroModel carro = new CarroModel();
+
+            carro.setPlaca(resultSet.getString("placa"));
+            carro.setModelo(resultSet.getString("modelo"));
+            carro.setFabricante(resultSet.getString("fabricante"));
+            carro.setCor(resultSet.getString("cor"));
+
+            return carro;
+        }
+
+        return null;
     }
 
-    public void update(CarroModel carroModel) {
+    public void delete(String placa) throws java.sql.SQLException, NotFoundException {
+        PreparedStatement stm = this.connection.prepareStatement("DELETE FROM CARROS WHERE placa = ?");
 
+        stm.setString(1, placa);
+
+        int line = stm.executeUpdate();
+
+        if (line == 0) {
+            throw new NotFoundException("Carro não encontrado para ser deletado!");
+        }
+    }
+
+    public void update(CarroModel carroModel) throws SQLException, NotFoundException {
+        PreparedStatement stm = this.connection.prepareStatement(
+            "UPDATE CARROS SET modelo = ?, fabricante = ?,cor = ? WHERE placa = ?"
+        );
+
+        stm.setString(1, carroModel.getModelo());
+        stm.setString(2, carroModel.getFabricante());
+        stm.setString(3, carroModel.getCor());
+
+        stm.setString(4, carroModel.getPlaca());
+
+        int line = stm.executeUpdate();
+
+        if (line == 0) {
+            throw new NotFoundException("Carro não encontrado para ser deletado!");
+        }
     }
 }
