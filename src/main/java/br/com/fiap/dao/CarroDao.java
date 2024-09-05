@@ -41,6 +41,7 @@ public class CarroDao {
 
         while (resultSet.next()) {
             CarroModel carroModel = new CarroModel(
+                resultSet.getInt("id"),
                 resultSet.getString("placa"),
                 resultSet.getString("modelo"),
                 resultSet.getString("fabricante"),
@@ -65,6 +66,7 @@ public class CarroDao {
         if (resultSet.next()) {
             CarroModel carro = new CarroModel();
 
+            carro.setId(resultSet.getInt("id"));
             carro.setPlaca(resultSet.getString("placa"));
             carro.setModelo(resultSet.getString("modelo"));
             carro.setFabricante(resultSet.getString("fabricante"));

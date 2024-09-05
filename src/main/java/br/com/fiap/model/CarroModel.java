@@ -1,6 +1,7 @@
 package br.com.fiap.model;
 
 public class CarroModel {
+    private int id;
     private String placa;
     private String modelo;
     private String fabricante;
@@ -14,6 +15,23 @@ public class CarroModel {
         this.fabricante = fabricante;
         this.cor = cor;
     }
+
+    public CarroModel(int id, String placa, String modelo, String fabricante, String cor) {
+        this.id = id;
+        this.placa = placa;
+        this.modelo = modelo;
+        this.fabricante = fabricante;
+        this.cor = cor;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public String getCor() {
         return cor;
