@@ -200,7 +200,14 @@ public class Main {
             multaModel.setDescricao(myScanner.next());
             myScanner.nextLine();
 
-            multaModel.setData(java.time.Instant.now());
+            System.out.print("Qual a data? (AAAA-MM-DD) ");
+            String data = myScanner.nextLine();
+            multaModel.setData(
+                LocalDate
+                    .parse(data)
+                    .atStartOfDay()
+                    .toInstant(ZoneOffset.UTC)
+            );
 
             System.out.print("Qual o valor? ");
             multaModel.setValor(myScanner.nextInt());
