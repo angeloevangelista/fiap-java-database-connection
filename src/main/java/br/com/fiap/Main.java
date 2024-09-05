@@ -197,23 +197,13 @@ public class Main {
             multaModel.setPaga("N");
 
             System.out.print("Qual a infração? ");
+            multaModel.setDescricao(myScanner.next());
+            myScanner.nextLine();
 
-            String descricao = myScanner.next();
-            multaModel.setDescricao(descricao);
-
-            java.time.Instant data = LocalDate.of(
-                    2024,
-                    4,
-                    15
-            ).atStartOfDay().toInstant(ZoneOffset.UTC);
-
-            multaModel.setData(data);
+            multaModel.setData(java.time.Instant.now());
 
             System.out.print("Qual o valor? ");
-
-            int valor = myScanner.nextInt();
-
-            multaModel.setValor(valor);
+            multaModel.setValor(myScanner.nextInt());
 
             multaModel.setCarroModel(carro);
 
@@ -223,7 +213,7 @@ public class Main {
             multaDao.closeConnection();
         } catch (SQLException e) {
             System.out.println("Ooops, erro no banco: " + e.getMessage());
-        }catch (ValidationException e) {
+        } catch (ValidationException e) {
             System.out.println("Erro de validação: " + e.getMessage());
         }
     }
