@@ -1,0 +1,176 @@
+INSERT INTO TAREFAS (
+	completa, titulo, DATA_CRIACAO, DATA_LIMITE 
+)
+VALUES
+	(
+		DEFAULT,
+		'Comprar um barco 7',
+		SYSDATE,
+		TO_DATE('2027-01-01', 'YYYY-MM-DD')
+	);
+
+ALTER TABLE TAREFAS
+MODIFY completa DEFAULT 'N';
+
+
+UPDATE
+	TAREFAS
+SET 
+	DATA_LIMITE = TO_DATE('2025-01-01', 'YYYY-MM-DD'),
+	TITULO = 'Lavar roupas do ano novo'
+WHERE
+	ID = 4;
+	
+
+UPDATE
+	TAREFAS 
+SET 
+	DATA_LIMITE = TO_DATE('2025-01-01', 'YYYY-MM-DD'),
+	TITULO = 'Lavar roupas do ano novo'
+WHERE
+	titulo = 'Comprar roupas novas';
+
+SELECT
+	*
+FROM 
+	TAREFAS
+WHERE 
+	titulo LIKE '%Comprar%';
+
+DELETE FROM 
+	TAREFAS
+WHERE 
+	titulo LIKE '%Comprar%'
+
+	
+SELECT
+	*
+FROM 
+	TAREFAS
+WHERE 
+	titulo LIKE '%';
+
+DELETE FROM 
+	TAREFAS
+WHERE 
+	titulo LIKE '%';
+
+
+COMMIT; -- Persiste AS alteracoes de forma permanente
+
+ROLLBACK; --  Desfaz tudo que estiver em memória
+
+
+
+SELECT	
+	TITULO,
+	DATA_CRIACAO 
+FROM 
+	TAREFAS
+WHERE	
+	COMPLETA = 'S'
+
+CREATE TABLE tarefas_completas (
+	titulo varchar(100),
+	data_criacao date
+)
+
+INSERT INTO tarefas_completas
+	-- (titulo, data_criacao)
+	(
+		SELECT	
+			TITULO,
+			DATA_CRIACAO
+		FROM 
+			TAREFAS
+		WHERE	
+			COMPLETA = 'S'
+	)
+
+	
+---------------------
+
+SELECT 
+	*
+FROM
+	TAREFAS
+ORDER BY	
+	COMPLETA ASC,
+	DATA_CRIACAO DESC,
+	TITULO
+
+SELECT DISTINCT
+	COMPLETA
+FROM
+	TAREFAS
+WHERE 
+	COMPLETA NOT IN ('N', 'S')
+	
+SELECT
+	ID * 2 AS "ID vezes 2",
+	COMPLETA || ' | ' || TITULO AS "Status"
+FROM
+	TAREFAS T
+ORDER BY
+	COMPLETA
+	
+SELECT
+	*
+FROM
+	TAREFAS
+WHERE 
+	DATA_LIMITE BETWEEN TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TO_DATE('2026-01-01', 'YYYY-MM-DD')
+
+	
+SELECT
+	*
+FROM
+	TAREFAS
+WHERE 
+	ID BETWEEN 14 AND 18
+	
+	
+SELECT * FROM DUAL
+
+
+SELECT
+	ROWNUM,
+	TAREFAS.*
+FROM
+	TAREFAS
+WHERE 
+	ROWNUM <= 3
+ORDER BY
+	DATA_CRIACAO DESC;
+
+
+SELECT
+	*
+FROM
+	TAREFAS
+ORDER BY
+	DATA_CRIACAO DESC;
+
+
+SELECT
+	*
+FROM
+	(
+		SELECT
+			*
+		FROM
+			TAREFAS
+		ORDER BY
+			DATA_CRIACAO DESC
+	)
+WHERE 
+	ROWNUM <= 3;
+
+SELECT 
+	*
+FROM 
+	V$NLS_PARAMETERS;
+
+ALTER SESSION
+SET NLS_DATE_LANGUAGE = 'PORTUGUESE';
+	
